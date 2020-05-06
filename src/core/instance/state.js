@@ -67,7 +67,7 @@ function initProps (vm: Component, propsOptions: Object) {
   // cache prop keys so that future props updates can iterate using Array
   // instead of dynamic object key enumeration.
   const keys = vm.$options._propKeys = []
-  const isRoot = !vm.$parent
+  const isRoot = !vm.$parent // @leason optimize judge root by $root
   // root instance props should be converted
   if (!isRoot) {
     toggleObserving(false)

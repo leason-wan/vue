@@ -29,6 +29,7 @@ export function setActiveInstance(vm: Component) {
   }
 }
 
+// @leason 挂载私有的生命周期标记属性
 export function initLifecycle (vm: Component) {
   const options = vm.$options
 
@@ -38,7 +39,7 @@ export function initLifecycle (vm: Component) {
     while (parent.$options.abstract && parent.$parent) {
       parent = parent.$parent
     }
-    parent.$children.push(vm)
+    parent.$children.push(vm) // vm实例自己挂载到parent的children属性上 （子寻父）
   }
 
   vm.$parent = parent
@@ -48,11 +49,11 @@ export function initLifecycle (vm: Component) {
   vm.$refs = {}
 
   vm._watcher = null
-  vm._inactive = null
-  vm._directInactive = false
+  vm._inactive = null // @leason 这是什么属性？
+  vm._directInactive = false // @leason 这是什么属性？
   vm._isMounted = false
   vm._isDestroyed = false
-  vm._isBeingDestroyed = false
+  vm._isBeingDestroyed = false // @leason 这是什么属性？
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {
@@ -333,6 +334,7 @@ export function deactivateChildComponent (vm: Component, direct?: boolean) {
   }
 }
 
+// @leason 触发生命周期的钩子
 export function callHook (vm: Component, hook: string) {
   // #7573 disable dep collection when invoking lifecycle hooks
   pushTarget()

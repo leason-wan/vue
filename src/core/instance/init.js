@@ -12,13 +12,24 @@ import { extend, mergeOptions, formatComponentName } from '../util/index'
 
 let uid = 0
 
+/**
+ * @leason注释 
+ * @param {Class} Vue 
+ * 
+ * 挂载init方法
+ * 
+ * init干了下面的事情：
+ * uid, _isVue, _self, $options, $options.el
+ * 生命周期调用
+ * 
+ */
 export function initMixin (Vue: Class<Component>) {
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     // a uid
     vm._uid = uid++
 
-    let startTag, endTag
+    let startTag, endTag // @leason 应该是benchmark用的
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       startTag = `vue-perf-start:${vm._uid}`
@@ -42,18 +53,21 @@ export function initMixin (Vue: Class<Component>) {
       )
     }
     /* istanbul ignore else */
+    // @leason TODO later
     if (process.env.NODE_ENV !== 'production') {
       initProxy(vm)
     } else {
       vm._renderProxy = vm
     }
+
+    // @leason 实例的生命周期函数调用
     // expose real self
-    vm._self = vm
-    initLifecycle(vm)
+    vm._self = vm  // @leason TODO 把this挂载到_self上 TODO later
+    initLifecycle(vm) // @leason 挂载私有的生命周期标记属性
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')
-    initInjections(vm) // resolve injections before data/props
+    initInjections(vm) // resolve injections before data/props @leason TODO later
     initState(vm)
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')

@@ -3,12 +3,15 @@ import { initGlobalAPI } from './global-api/index'
 import { isServerRendering } from 'core/util/env'
 import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
 
+// @leason注释 挂载全局API
 initGlobalAPI(Vue)
 
+// @leason注释 挂载服务端渲染配置
 Object.defineProperty(Vue.prototype, '$isServer', {
   get: isServerRendering
 })
 
+// @leason注释 挂载服务端渲染上下文
 Object.defineProperty(Vue.prototype, '$ssrContext', {
   get () {
     /* istanbul ignore next */
